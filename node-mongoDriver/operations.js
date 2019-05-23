@@ -2,7 +2,7 @@ const assert = require("assert");
 
 exports.insertDocument = (db, document, collection, callback) => {
   const coll = db.collection(collection);
-  return coll.insert(document);
+  return coll.insert(document); // it return promise
 };
 
 exports.findDocuments = (db, collection, callback) => {
