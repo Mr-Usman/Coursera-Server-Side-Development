@@ -13,15 +13,34 @@ connect.then(db => {
   console.log("Connected correctly to server");
 
   Dishes.create({
-    name: "pizza",
+    name: "piza",
     description: "broadway"
   })
     .then(dish => {
       console.log(dish);
-      return Dishes.find({}).exec();
+      return Dishes.findByIdAndUpdate(
+        dish._id,
+        {
+          $set: { description: "Updated test" }
+        },
+        {
+          new: true
+        }
+      ).exec();
     })
-    .then(dishes => {
-      console.log(dishes);
+    .then(dish => {
+      console.log(dish);
+
+      dish.comments.push({
+        rating: 5,
+        comment: "Levish",
+        author: "usman rehmat"
+      });
+
+      return dish.save();
+    })
+    .then(dish => {
+      console.log(dish);
       return db.collection("dishes").drop();
     })
     .then(() => {
